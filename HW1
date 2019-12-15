@@ -1,0 +1,44 @@
+from requests import request
+
+
+def test1(url, method, headers, data):
+    query(url,method, headers, data)
+
+def test2(url, method, headers, data):
+    query(url,method, headers, data)
+
+def test3(url, method, headers, data):
+    query(url,method, headers, data)
+
+def query(url, method, headers, data):
+    try:
+        if headers != '':
+            if data != '':
+                response = request(method, url, headers=headers, params=data)
+            else:
+                response = request(method, url, headers=headers)
+        else:
+            if data != '':
+                response = request(method, url, headers={'Content-Type': 'application/json'}, params=data)
+            else:
+                response = request(method,url,headers={'Content-Type': 'application/json'})
+
+        print (url + ' response content is: ' + str(response.content))
+        print (url + ' response status_code is: ' + str(response.status_code))
+        print (url + ' response headers is: ' + str(response.headers))
+    except Exception as e:
+        print (url + ' Http request exception: ' + str(e))
+
+def main():
+    url_1 = 'https://www.google.com/search?hl=en&q=\'Tim BernersLee\''
+    url_2 = 'https://software.cisco.com/download/home'
+    url_3 = 'https://www.ciscogoogle.com'
+
+    headers = {'User-agent':'Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.0; Trident/5.0; TheWorld)','Content-Type': 'application/json'}
+    data = {"test":"test"}
+    test1(url_1, 'GET', headers, '')
+    test2(url_2, 'POST', '', data)
+    test3(url_3, 'GET','', '')
+
+if __name__ == '__main__':
+    main()
